@@ -1,10 +1,8 @@
 var randomWords = require('random-words');
 
-var inquirer = require('inquirer');
+var inquirer = require('inquirer')
 
-var Word = require('./wordConstructor');
-
-var Letter = require('./letterConstructor');
+var Word = require('./wordConstructor')
 
 var hangmanWords = randomWords(20);
 
@@ -16,11 +14,7 @@ var guessesRemaining = 15;
 
 var wrongGuesses = [];
 
-var chosenWord = {};
-
-
-
-
+var newWord = {};
 
 function startGame(){
   inquirer.prompt([
@@ -32,16 +26,16 @@ function startGame(){
   }    
   ]).then(function(response){
     if (response.playgame === true) {
-     chosenWord = new Word(currentWord);
-     console.log(chosenWord.wordDisplay);
+     newWord = new Word(currentWord);
+     console.log(newWord.currentword)
+     console.log(newWord.wordDisplay);
+     console.log(guessesRemaining + " guesses remaining");
      swapFunction();
-     console.log(guessesRemaining)
     } else {
       console.log("Ok, bye");
     }
   });
 }
-
 
 function chooseWord() {
   return hangmanWords[(Math.floor(Math.random) * 20)];
@@ -55,14 +49,22 @@ function swapFunction() {
      message: "Guess a letter" 
     }
     ]).then(function(response){ 
-      if(currentWord.indexOf(response.guess)!==-1 && guessesRemaining > 0){
-        var newLetter = new Letter(response.guess);
-        newLetter.letterGuessed = true;
-        newLetter.letterCheck();
+      if(currentWord.indexOf(response.guess)!== -1 && guessesRemaining > 0){
+        // var newLetter = new Letter(response.guess);
+        for (index in newWord.letterArray) {
+          if(response.guess === newWord.letterArray[index].guess) {
+            var newLetter = newWord.letterArray[index];
+            newLetter.letterGuessed = true;
+            newLetter.letterCheck();
+            console.log(newLetter);
+          }
+        }
+        newWord.displayWord();
+        console.log(newWord.wordDisplay);
         guessesRemaining--;
         console.log(guessesRemaining + " guesses remaining!");
         swapFunction();
-      } else if (currentWord.indexOf(response.guess) < 0 && guessesRemaining > 0) {
+      } else if (response.guess.indexOf(currentWord) < 0 && guessesRemaining > 0) {
         console.log("Wrong Answer!");
         wrongGuesses.push(response.guess);
         guessesRemaining--;
@@ -76,5 +78,9 @@ function swapFunction() {
     })
   }
 
+// End Game Logic
+// When the full word has been guessed OR the user is out of guesses, run the startGame logic again to ask if they want to play
+// If the answer is yes, create a new game, and reset the guesses remaining
+// If the answer is no, end the game
 
 startGame();

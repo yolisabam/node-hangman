@@ -1,4 +1,5 @@
-var Letter = require('./letterConstructor');
+var Letter = require('./letterConstructor')
+
 
 var Word = function(word){
   this.currentword = word;
@@ -12,19 +13,23 @@ var Word = function(word){
 
   } 
   this.displayWord = function() {
+    this.wordDisplay = ""; //gives this word a blank slate every time this function gets called
     for(i=0; i<this.letterArray.length; i++) {
       if(this.letterArray[i].letterGuessed === false){
         this.wordDisplay += "_ ";
       } else if (this.letterArray[i].letterGuessed === true){
-        this.wordDisplay += this.letterArray[i].guess;
+        this.wordDisplay += this.letterArray[i].guess + " ";
       }
     }
   }
   this.wordSearch();
   this.displayWord();
 }
+// newWord = new Word("Apple");
 
+// console.log(newWord.wordDisplay);
 
 module.exports = Word;
+
 
 
