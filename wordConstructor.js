@@ -14,7 +14,7 @@ var Word = function(word){
   this.displayWord = function() {
     for(i=0; i<this.letterArray.length; i++) {
       if(this.letterArray[i].letterGuessed === false){
-        this.wordDisplay += "_";
+        this.wordDisplay += "_ ";
       } else if (this.letterArray[i].letterGuessed === true){
         this.wordDisplay += this.letterArray[i].guess;
       }
@@ -25,7 +25,7 @@ var Word = function(word){
 }
  newWord = new Word("Apple");
 
- console.log(newWord);
+ console.log(newWord.wordDisplay);
 
 module.exports = Word;
 
