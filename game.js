@@ -1,8 +1,10 @@
 var randomWords = require('random-words');
 
-var inquirer = require('inquirer')
+var inquirer = require('inquirer');
 
-var Word = require('./wordConstructor')
+var Word = require('./wordConstructor');
+
+var Letter = require('./letterConstructor');
 
 var hangmanWords = randomWords(20);
 
@@ -13,6 +15,8 @@ var currentWord = hangmanWords[randomIndex];
 var guessesRemaining = 15;
 
 var wrongGuesses = [];
+
+var chosenWord = {};
 
 
 
@@ -28,8 +32,8 @@ function startGame(){
   }    
   ]).then(function(response){
     if (response.playgame === true) {
-     var newWord = new Word(currentWord);
-     console.log(newWord.wordDisplay);
+     chosenWord = new Word(currentWord);
+     console.log(chosenWord.wordDisplay);
      swapFunction();
      console.log(guessesRemaining)
     } else {
@@ -51,14 +55,14 @@ function swapFunction() {
      message: "Guess a letter" 
     }
     ]).then(function(response){ 
-      if(response.guess.indexOf(currentWord)>0 && guessesRemaining > 0){
+      if(currentWord.indexOf(response.guess)!==-1 && guessesRemaining > 0){
         var newLetter = new Letter(response.guess);
         newLetter.letterGuessed = true;
         newLetter.letterCheck();
         guessesRemaining--;
         console.log(guessesRemaining + " guesses remaining!");
         swapFunction();
-      } else if (response.guess.indexOf(currentWord) < 0 && guessesRemaining > 0) {
+      } else if (currentWord.indexOf(response.guess) < 0 && guessesRemaining > 0) {
         console.log("Wrong Answer!");
         wrongGuesses.push(response.guess);
         guessesRemaining--;

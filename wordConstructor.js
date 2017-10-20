@@ -23,9 +23,7 @@ var Word = function(word){
   this.wordSearch();
   this.displayWord();
 }
- newWord = new Word("Apple");
 
- console.log(newWord.wordDisplay);
 
 module.exports = Word;
 
