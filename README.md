@@ -11,7 +11,7 @@ Run game.js file in terminal to play game
 ## Built With
 * Node JS
 * Random Words - NPM Package for generating random words
-* Inquirer - NPM Package for prompt, retrieviing user info
+* Inquirer - NPM Package for prompt, retrieving user info
 * Javascript
 
 ## Relevent Code Snippets
